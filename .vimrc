@@ -22,11 +22,7 @@ let g:TasksDateFormat = '%Y-%m-%d %H:%M'
 let g:TasksAttributeMarker = '@'
 let g:TasksArchiveSeparator = '＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿'
 
-augroup tasks
-        autocmd!
-        au Filetype tasks silent! nmap <buffer> <localleader>tu <Plug>(TasksNewTaskUp)
-        au Filetype tasks silent! nmap <buffer> <localleader>td <Plug>(TasksNewTaskDown)
-augroup END
+let maplocalleader="\<space>"
 
 "Control-C to yank to clipboard
 vmap <C-c> "+yi
