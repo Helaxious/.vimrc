@@ -6,4 +6,4 @@ In the case of the `.vimrc`, copy/substitute with your current `.vimrc`, the `pl
 
 ## What's on the stock?
 
-For the plugins, simply go inside `plugins/plugged` to check that, this repo also has a converted version of the [spacedust theme](https://github.com/hallski/spacedust-theme) (`set background=dark` & `:colo spacedust`), and the [PaperColor theme](https://github.com/NLKNguyen/papercolor-theme) (`set background=light` & `:colo PaperColor`).
+For the plugins, simply go to the `.vimrc` to check that, this repo also has a converted version of the [spacedust theme](https://github.com/hallski/spacedust-theme) (`set background=dark` & `:colo spacedust`), and the [PaperColor theme](https://github.com/NLKNguyen/papercolor-theme) (`set background=light` & `:colo PaperColor`).
