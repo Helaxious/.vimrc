@@ -6,6 +6,9 @@ noremap k gk
 noremap <Up> gk
 noremap <Down> gj
 
+" STOP CLEARING MY CLIPBOARD
+autocmd VimLeave * call system("xsel -ib", getreg('+'))
+
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
 
@@ -22,6 +25,20 @@ let g:TasksDateFormat = '%Y-%m-%d %H:%M'
 let g:TasksAttributeMarker = '@'
 let g:TasksArchiveSeparator = '＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿'
 
+"For vim-easymotion
+
+"Shoo-Shoo, go away default mappings
+let g:EasyMotion_do_mapping = 0 
+
+"Not really interested in case-sensitive things..
+let g:EasyMotion_smartcase = 1
+
+"I'm going to be honest, I don't think `c`hange is useful when you have `s`ubstitute
+
+"2 character search
+nmap c <Plug>(easymotion-overwin-f2)
+
+"For Vim tasks
 let maplocalleader="\<space>"
 
 "Control-C to yank to clipboard
@@ -44,6 +61,7 @@ inoremap <silent><c-s> <c-o>:update<cr>
 
 call plug#begin('~/vim/plugins/plugged')
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'easymotion/vim-easymotion'
 Plug 'itchyny/lightline.vim'
 Plug 'crispydrone/vim-tasks'
 Plug 'whatyouhide/vim-gotham'
