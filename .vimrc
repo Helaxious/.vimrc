@@ -81,6 +81,17 @@ let g:startify_custom_header_quotes = [
     \ ['Neovim.', "Now 98% FOSS!"],
     \ ["Don't sink your app with runtime bloat", "Program in C will stay afloat", "Do what you want there, close to the hardware!", "Program in C!"],
     \ ["It's not a bug", "It's a feature"]
+    \ ["This little maneuver's going to cost us 51 years"]
+    \ ["Pizza time"]
+    \ ["The power of the vim, in my hand"]
+    \ ["Still got the moves!"]
+    \ ["Você não está pensando em 4 dimensões!"]
+    \ ["Falou tiozões do zap"]
+    \ ["Você pode agradecer Alan Turing", "por tudo isso"]
+    \ ["Antes de falarmos sobre clean coode", "devemos primeiro definir o que", "é clean code"]
+    \ ["Ada Lovelace realmente mostrou", "para nós como é que se fazia"]
+    \ ["Deixe o seu like, se inscreva", "e ativa o sininho para não perder nenhum vídeo"]
+    \ ["One does not simply program in C++"]
 \ ]
 let g:startify_custom_header = 'startify#fortune#boxed()'
 
@@ -102,7 +113,7 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/vim-plug'
 call plug#end()
