@@ -92,6 +92,7 @@ let g:startify_custom_header_quotes = [
     \ ["Ada Lovelace realmente mostrou", "para nós como é que se fazia"], 
     \ ["Deixe o seu like, se inscreva", "e ativa o sininho para não perder nenhum vídeo"], 
     \ ["One does not simply program in C++"], 
+    \ ["We estimate that in the next decade, everyone", "will have their own Turboencabulator at home."]
 \ ]
 let g:startify_custom_header = 'startify#fortune#boxed()'
 
