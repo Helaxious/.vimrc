@@ -94,9 +94,9 @@ let g:startify_custom_header_quotes = [
     \ ["Deixe o seu like, se inscreva", "e ativa o sininho para não perder nenhum vídeo"], 
     \ ["One does not simply program in C++"], 
     \ ["We estimate that in the next decade, everyone", "will have their own Turboencabulator at home."],
-    \ ["Just wrap it in a try catch bro"]
-    \ ["How do you exit vim?"]
-    \ ["Vim-tastic!"]
+    \ ["Just wrap it in a try catch bro"],
+    \ ["How do you exit vim?"],
+    \ ["Vim-tastic!"],
 \ ]
 let g:startify_skiplist = [
     \ "/run/*"
