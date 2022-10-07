@@ -133,8 +133,12 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'jiangmiao/auto-pairs'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-commentary'
+Plug 'alvarosevilla95/luatab.nvim'
 Plug 'junegunn/vim-plug'
 call plug#end()
+
+"luatab.nvim
+lua require('luatab').setup()
 
 "Telescope.nvim
 lua require('telescope').setup({
@@ -187,7 +191,7 @@ colorscheme PaperColor
 " colo gruvbox
 set background=light
 
-let g:lightline={ 'colorscheme': 'PaperColor' }
+let g:lightline={ 'colorscheme': 'PaperColor', 'enable': { 'tabline' : 0 } }
 
 "Set the tab character to input multiple spaces, instead of an tab
 set tabstop=8 softtabstop=4 expandtab shiftwidth=4 smarttab shiftround
