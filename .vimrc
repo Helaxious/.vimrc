@@ -92,7 +92,11 @@ let g:startify_custom_header_quotes = [
     \ ["Ada Lovelace realmente mostrou", "para nós como é que se fazia"], 
     \ ["Deixe o seu like, se inscreva", "e ativa o sininho para não perder nenhum vídeo"], 
     \ ["One does not simply program in C++"], 
-    \ ["We estimate that in the next decade, everyone", "will have their own Turboencabulator at home."]
+    \ ["We estimate that in the next decade, everyone", "will have their own Turboencabulator at home."],
+    \ ["Just wrap it in a try catch bro"]
+\ ]
+let g:startify_skiplist = [
+    \ "/run/*"
 \ ]
 let g:startify_custom_header = 'startify#fortune#boxed()'
 
@@ -107,13 +111,17 @@ Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-surround'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
+Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 Plug 'crispydrone/vim-tasks'
 Plug 'whatyouhide/vim-gotham'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/vim-plug'
