@@ -1,5 +1,9 @@
 syntax on
 
+"Disabling netrw
+let g:loaded = 1
+let g:loaded_netrwPlugin = 1
+
 "Map up and down to be able to move through soft-wrapped lines
 noremap j gj
 noremap k gk
@@ -38,9 +42,6 @@ let g:TasksMarkerCancelled = '✘'
 let g:TasksDateFormat = '%Y-%m-%d %H:%M'
 let g:TasksAttributeMarker = '@'
 let g:TasksArchiveSeparator = '＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿'
-
-"For nerdtree
-nnoremap <leader>t :NERDTree<CR>
 
 "For vim-easymotion
 
@@ -94,6 +95,8 @@ let g:startify_custom_header_quotes = [
     \ ["One does not simply program in C++"], 
     \ ["We estimate that in the next decade, everyone", "will have their own Turboencabulator at home."],
     \ ["Just wrap it in a try catch bro"]
+    \ ["How do you exit vim?"]
+    \ ["Vim-tastic!"]
 \ ]
 let g:startify_skiplist = [
     \ "/run/*"
@@ -106,9 +109,9 @@ vnoremap <silent><c-s> <c-c>:update<cr>gv
 inoremap <silent><c-s> <c-o>:update<cr>
 
 call plug#begin('~/vim/plugins/plugged')
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'morhetz/gruvbox'
-Plug 'preservim/nerdtree'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-obsession'
 Plug 'https://github.com/shanesmith/vim-surround.git'
@@ -122,10 +125,32 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'jiangmiao/auto-pairs'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/vim-plug'
 call plug#end()
+
+"Telescope.nvim
+lua require('telescope').setup({
+    \ extensions = {
+        \ file_browser = {
+            \ hijack_netrw = true,
+        \ },
+    \ },
+\})
+lua require('telescope').load_extension "file_browser"
+nnoremap <C-f> <cmd>Telescope find_files<cr>
+nnoremap <leader>f <cmd>Telescope file_browser<cr>
+
+"nvim-tree.lua
+lua require("nvim-tree").setup()
+nnoremap <leader>t <cmd>NvimTreeFocus<cr>
 
 "Taken from https://stackoverflow.com/questions/1642611/how-to-save-and-restore-multiple-different-sessions-in-vim
 "Two functions that basically wrap around vim-obsession and accept an argument
@@ -165,7 +190,7 @@ set background=light
 let g:lightline={ 'colorscheme': 'PaperColor' }
 
 "Set the tab character to input multiple spaces, instead of an tab
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab shiftround
+set tabstop=8 softtabstop=4 expandtab shiftwidth=4 smarttab shiftround
 
 "Don't soft wrap lines in the midd
 "le of a line
