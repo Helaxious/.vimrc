@@ -4,6 +4,10 @@ syntax on
 let g:loaded = 1
 let g:loaded_netrwPlugin = 1
 
+"Making search case-insensitive
+set ignorecase
+set smartcase
+
 "Map up and down to be able to move through soft-wrapped lines
 noremap j gj
 noremap k gk
