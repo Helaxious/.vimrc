@@ -136,10 +136,32 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'jiangmiao/auto-pairs'
 " Plug 'Valloric/YouCompleteMe'
+" Plug 'wfxr/minimap.vim'
+Plug 'romainl/vim-cool'
+Plug 'junegunn/goyo.vim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'alvarosevilla95/luatab.nvim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-plug'
 call plug#end()
+
+"indent-blankline.nvim"
+lua vim.opt.list = true
+lua vim.opt.listchars:append "space:⋅"
+
+let g:indent_blankline_char_highlight_list = ['CoolLineIndentation1', 'CoolLineIndentation2', 'CoolLineIndentation3', 'CoolLineIndentation4', 'CoolLineIndentation5']
+" let g:indent_blankline_space_char_highlight_list = ['Error', 'Function']
+
+lua require("indent_blankline").setup({
+    \ space_char_blankline = " ",
+    \ show_current_context = true,
+    \ show_current_context_start = true,
+\})
+
+"minimap.CoolLineIndentation5vim
+let g:minimap_highlight_range = 1
 
 "luatab.nvim
 lua require('luatab').setup()
@@ -213,3 +235,16 @@ set autoread "re-read files when modified outside vim
 set backspace=indent,eol,start "Backspace through everything!
 set noswapfile "No swap files, please
 set history=3000 "Control-z all the way through the stone age!
+
+"Firenvim settings
+if exists('g:started_by_firenvim')
+    set laststatus=0
+                    set guifont=monospace:h11
+    nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
+endif
+
+highlight CoolLineIndentation1 guifg=#a5c8e4
+highlight CoolLineIndentation2 guifg=#9edbbd
+highlight CoolLineIndentation3 guifg=#d3d683
+highlight CoolLineIndentation4 guifg=#e3bb98
+highlight CoolLineIndentation5 guifg=#eda3a1
