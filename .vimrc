@@ -129,7 +129,7 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
