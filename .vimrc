@@ -129,7 +129,7 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
@@ -137,7 +137,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'wfxr/minimap.vim'
+Plug 'wfxr/minimap.vim'
 Plug 'romainl/vim-cool'
 Plug 'junegunn/goyo.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -145,7 +145,7 @@ Plug 'tpope/vim-commentary'
 Plug 'alvarosevilla95/luatab.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-" Plug 'p00f/nvim-ts-rainbow'
+Plug 'p00f/nvim-ts-rainbow'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -170,7 +170,6 @@ lua require('lspconfig').clangd.setup({})
 lua require('lspconfig').cmake.setup({})
 lua require('lspconfig').cssls.setup({})
 lua require('lspconfig').html.setup({})
-lua require('lspconfig').ltex.setup({})
 lua require('lspconfig').pylsp.setup({
     \ settings = {
         \ pylsp = {
@@ -221,7 +220,6 @@ lua <<EOF
     require('lspconfig')['cmake'].setup({ capabilities = capabilities })
     require('lspconfig')['cssls'].setup({ capabilities = capabilities })
     require('lspconfig')['html'].setup({ capabilities = capabilities })
-    require('lspconfig')['ltex'].setup({ capabilities = capabilities })
     require('lspconfig')['pylsp'].setup({ capabilities = capabilities })
     require('lspconfig')['rust_analyzer'].setup({ capabilities = capabilities })
     require('lspconfig')['vimls'].setup({ capabilities = capabilities })
