@@ -131,13 +131,12 @@ Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'Valloric/YouCompleteMe'
 " Plug 'wfxr/minimap.vim'
 Plug 'romainl/vim-cool'
 Plug 'junegunn/goyo.vim'
@@ -147,13 +146,86 @@ Plug 'alvarosevilla95/luatab.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " Plug 'p00f/nvim-ts-rainbow'
-" Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'dmitmel/cmp-digraphs'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'folke/tokyonight.nvim'
 Plug 'junegunn/vim-plug'
 call plug#end()
 
 "mason.nvim
 lua require("mason").setup()
+lua require("mason-lspconfig").setup()
+
+"neovim-lspconfig
+lua require('lspconfig').bashls.setup({})
+lua require('lspconfig').clangd.setup({})
+lua require('lspconfig').cmake.setup({})
+lua require('lspconfig').cssls.setup({})
+lua require('lspconfig').html.setup({})
+lua require('lspconfig').ltex.setup({})
+lua require('lspconfig').pylsp.setup({
+    \ settings = {
+        \ pylsp = {
+            \ plugins = {
+                \ autopep8 = {
+                    \ enabled = false,
+                \ },
+                \ mccabe = {
+                    \ enabled = false,
+                \ },
+                \ pycodestyle = {
+                    \ enabled = false,
+                \ },
+                \ pyflakes = {
+                    \ enabled = false,
+                \ },
+                \ yapf = {
+                    \ enabled = false,
+                \ },
+            \ },
+        \ },
+    \ },
+\ })
+lua require('lspconfig').rust_analyzer.setup({})
+lua require('lspconfig').vimls.setup({})
+
+" This dictionary entry doesnt work, but its not like vimscript autocomplete
+" is *that* important
+    " \ 'vim'        : 'vimls',
+let g:lsc_auto_map = 1
+
+"nvim-cmp
+
+set completeopt=menu,menuone,noselect
+
+lua <<EOF
+    require('cmp').setup({
+        sources = {
+            { name = 'nvim_lsp' },
+            { name = 'buffer' },
+        },
+    })
+
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    
+    require('lspconfig')['bashls'].setup({ capabilities = capabilities })
+    require('lspconfig')['clangd'].setup({ capabilities = capabilities })
+    require('lspconfig')['cmake'].setup({ capabilities = capabilities })
+    require('lspconfig')['cssls'].setup({ capabilities = capabilities })
+    require('lspconfig')['html'].setup({ capabilities = capabilities })
+    require('lspconfig')['ltex'].setup({ capabilities = capabilities })
+    require('lspconfig')['pylsp'].setup({ capabilities = capabilities })
+    require('lspconfig')['rust_analyzer'].setup({ capabilities = capabilities })
+    require('lspconfig')['vimls'].setup({ capabilities = capabilities })
+EOF
 
 "nvim-treesitter
 lua require('nvim-treesitter.configs').setup({
@@ -272,4 +344,3 @@ endif
 highlight CoolLineIndentation1 guifg=#a5c8e4
 highlight CoolLineIndentation2 guifg=#9edbbd
 highlight CoolLineIndentation3 guifg=#d3d683
-
