@@ -1,5 +1,3 @@
-syntax on
-
 "Disabling netrw
 let g:loaded = 1
 let g:loaded_netrwPlugin = 1
@@ -13,6 +11,9 @@ noremap j gj
 noremap k gk
 noremap <Up> gk
 noremap <Down> gj
+
+"Personal thing for me in jekyll blogging
+nmap <C-k> i{% image_link %}<ESC>hhh<C-S-V>li width:90<ESC>
 
 "Switch tabs
 map <C-Tab> gt
@@ -130,10 +131,11 @@ Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'jiangmiao/auto-pairs'
 " Plug 'Valloric/YouCompleteMe'
 " Plug 'wfxr/minimap.vim'
@@ -144,15 +146,37 @@ Plug 'tpope/vim-commentary'
 Plug 'alvarosevilla95/luatab.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+" Plug 'p00f/nvim-ts-rainbow'
+" Plug 'williamboman/mason.nvim'
+Plug 'folke/tokyonight.nvim'
 Plug 'junegunn/vim-plug'
 call plug#end()
+
+"mason.nvim
+lua require("mason").setup()
+
+"nvim-treesitter
+lua require('nvim-treesitter.configs').setup({
+    \ highlight = {
+    \   enable = true,
+    \   additional_vim_regex_highlighting = true;
+    \ },
+    \ indent = { enable = true  },
+    \ incremental_selection = { enable = true  },
+    \ rainbow = { enable = true,
+    \             extended_mode=false,
+    \             colors = {"#a5c8e4",
+    \                       "#9edbbd",
+    \                       "#d3d683",
+    \                       }
+    \ },
+\ })
 
 "indent-blankline.nvim"
 lua vim.opt.list = true
 lua vim.opt.listchars:append "space:⋅"
 
-let g:indent_blankline_char_highlight_list = ['CoolLineIndentation1', 'CoolLineIndentation2', 'CoolLineIndentation3', 'CoolLineIndentation4', 'CoolLineIndentation5']
-" let g:indent_blankline_space_char_highlight_list = ['Error', 'Function']
+let g:indent_blankline_char_highlight_list = ['CoolLineIndentation1', 'CoolLineIndentation2', 'CoolLineIndentation3']
 
 lua require("indent_blankline").setup({
     \ space_char_blankline = " ",
@@ -160,7 +184,7 @@ lua require("indent_blankline").setup({
     \ show_current_context_start = true,
 \})
 
-"minimap.CoolLineIndentation5vim
+"minimap.vim
 let g:minimap_highlight_range = 1
 
 "luatab.nvim
@@ -174,6 +198,8 @@ lua require('telescope').setup({
         \ },
     \ },
 \})
+lua require('telescope').load_extension('ui-select')
+
 lua require('telescope').load_extension "file_browser"
 nnoremap <C-f> <cmd>Telescope find_files<cr>
 nnoremap <leader>f <cmd>Telescope file_browser<cr>
@@ -239,12 +265,11 @@ set history=3000 "Control-z all the way through the stone age!
 "Firenvim settings
 if exists('g:started_by_firenvim')
     set laststatus=0
-                    set guifont=monospace:h11
+    set guifont=monospace:h11
     nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
 endif
 
 highlight CoolLineIndentation1 guifg=#a5c8e4
 highlight CoolLineIndentation2 guifg=#9edbbd
 highlight CoolLineIndentation3 guifg=#d3d683
-highlight CoolLineIndentation4 guifg=#e3bb98
-highlight CoolLineIndentation5 guifg=#eda3a1
+
