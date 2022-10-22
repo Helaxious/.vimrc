@@ -12,14 +12,33 @@ noremap k gk
 noremap <Up> gk
 noremap <Down> gj
 
+noremap H ^
+noremap L g_
+
+noremap <C-S-h> b
+noremap <C-S-l> e
+
+imap <C-S-h> <ESC>hvb
+imap <C-S-l> <ESC>lve
+
+imap <C-A-h> <ESC>v^
+imap <C-A-l> <ESC>vg_
+
+vmap ( S)
+
+noremap <C-H> b
+noremap <C-L> e
+
+imap <C-BS> <ESC>dbxa
+
 "Personal thing for me in jekyll blogging
 nmap <C-k> i{% image_link %}<ESC>hhh<C-S-V>li width:90<ESC>
 
 "Switch tabs
 map <C-Tab> gt
 map <C-S-Tab> gT
-imap <C-Tab> gt
-imap <C-S-Tab> gT
+imap <C-Tab> <ESC>gt
+imap <C-S-Tab> <ESC>gT
 :tnoremap <C-Tab> <C-\><C-n> gt
 :tnoremap <C-S-Tab> <C-\><C-n> gT
 
@@ -129,7 +148,7 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
@@ -154,7 +173,6 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-buffer'
-Plug 'dmitmel/cmp-digraphs'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'folke/tokyonight.nvim'
 Plug 'junegunn/vim-plug'
@@ -170,11 +188,16 @@ lua require('lspconfig').clangd.setup({})
 lua require('lspconfig').cmake.setup({})
 lua require('lspconfig').cssls.setup({})
 lua require('lspconfig').html.setup({})
+
+"Can you possibly tell that I really dislike pep8 linters?
 lua require('lspconfig').pylsp.setup({
     \ settings = {
         \ pylsp = {
             \ plugins = {
                 \ autopep8 = {
+                    \ enabled = false,
+                \ },
+                \ flake8 = {
                     \ enabled = false,
                 \ },
                 \ mccabe = {
@@ -203,26 +226,34 @@ let g:lsc_auto_map = 1
 
 "nvim-cmp
 
-set completeopt=menu,menuone,noselect
+" set completeopt=menu,menuone,noselect
 
 lua <<EOF
-    require('cmp').setup({
-        sources = {
-            { name = 'nvim_lsp' },
-            { name = 'buffer' },
-        },
+    local cmp = require('cmp')
+    cmp.setup({
+       mapping = cmp.mapping.preset.insert({
+           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+           ['<C-f>'] = cmp.mapping.scroll_docs(4),
+           ['<C-Space>'] = cmp.mapping.complete(),
+           ['<C-e>'] = cmp.mapping.abort(),
+           ['<CR>'] = cmp.mapping.confirm({ select = true }),
+       }),
+       sources = {
+           { name = 'nvim_lsp' },
+           { name = 'buffer' },
+       },
     })
 
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     
-    require('lspconfig')['bashls'].setup({ capabilities = capabilities })
-    require('lspconfig')['clangd'].setup({ capabilities = capabilities })
-    require('lspconfig')['cmake'].setup({ capabilities = capabilities })
-    require('lspconfig')['cssls'].setup({ capabilities = capabilities })
-    require('lspconfig')['html'].setup({ capabilities = capabilities })
-    require('lspconfig')['pylsp'].setup({ capabilities = capabilities })
-    require('lspconfig')['rust_analyzer'].setup({ capabilities = capabilities })
-    require('lspconfig')['vimls'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['bashls'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['clangd'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['cmake'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['cssls'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['html'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['pylsp'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['rust_analyzer'].setup({ capabilities = capabilities })
+    --- require('lspconfig')['vimls'].setup({ capabilities = capabilities })
 EOF
 
 "nvim-treesitter
@@ -235,9 +266,9 @@ lua require('nvim-treesitter.configs').setup({
     \ incremental_selection = { enable = true  },
     \ rainbow = { enable = true,
     \             extended_mode=false,
-    \             colors = {"#a5c8e4",
-    \                       "#9edbbd",
-    \                       "#d3d683",
+    \             colors = {"#0675d4",
+    \                       "#9da100",
+    \                       "#00944b",
     \                       }
     \ },
 \ })
@@ -335,10 +366,10 @@ set history=3000 "Control-z all the way through the stone age!
 "Firenvim settings
 if exists('g:started_by_firenvim')
     set laststatus=0
-    set guifont=monospace:h11
+    set guifont=JetBrainsMono\ Nerd\ Font\ Mono:h11
     nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
 endif
 
-highlight CoolLineIndentation1 guifg=#a5c8e4
-highlight CoolLineIndentation2 guifg=#9edbbd
-highlight CoolLineIndentation3 guifg=#d3d683
+highlight CoolLineIndentation1 guifg=#99bfde
+highlight CoolLineIndentation2 guifg=#8ccfae
+highlight CoolLineIndentation3 guifg=#c6c975
