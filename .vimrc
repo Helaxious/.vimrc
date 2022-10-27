@@ -145,10 +145,10 @@ Plug 'mhinz/vim-startify'
 Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 Plug 'crispydrone/vim-tasks'
 Plug 'whatyouhide/vim-gotham'
-" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
@@ -162,13 +162,15 @@ Plug 'junegunn/goyo.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'alvarosevilla95/luatab.nvim'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'williamboman/mason.nvim'
+Plug 'seblj/nvim-echo-diagnostics'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'matze/vim-move'
+Plug 'tommcdo/vim-lion'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -179,8 +181,29 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'lewis6991/hover.nvim'
 Plug 'folke/tokyonight.nvim'
+Plug 'https://gitlab.com/yorickpeterse/nvim-dd.git'
 Plug 'junegunn/vim-plug'
 call plug#end()
+
+lua require("echo-diagnostics").setup()
+set updatetime=300
+autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
+
+"gitsigns
+lua <<EOF
+    require('gitsigns').setup({
+    signs = {
+        add          = {hl = 'GitSignsAdd'   , text = '+', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+        change       = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+        delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+        topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+        changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    },
+    })
+EOF
+
+"Hey diagnostics, slow down a bit!
+lua require('dd').setup({timeout = 500})
 
 "mason.nvim
 lua require("mason").setup()
@@ -219,16 +242,22 @@ lua <<EOF
        sources = cmp.config.sources({
            { name = 'nvim_lsp' },
            { name = 'luasnip' },
-        }, {
-            { name = 'buffer' }
+           { name = 'buffer' },
+           { name = 'path' },
         })
     })
 
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 EOF
 
-"Can you possibly guess that I *hate* on-screen linters?
-lua vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
+" Can you possibly guess that I *hate* on-screen linters?
+lua <<EOF
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = false,
+        }
+    )
+EOF
 
 "hover.nvim
 lua <<EOF
