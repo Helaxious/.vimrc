@@ -18,18 +18,22 @@ noremap L g_
 noremap <C-S-h> b
 noremap <C-S-l> e
 
-imap <C-S-h> <ESC>hvb
+imap <C-S-h> <ESC>vb
 imap <C-S-l> <ESC>lve
 
-imap <C-A-h> <ESC>v^
+imap <C-A-h> <ESC>lv^
 imap <C-A-l> <ESC>vg_
 
-vmap ( S)
+vmap ( S)gv
+vmap [ S]gv
+vmap { S}gv
+vmap ' S'gv
+vmap <C-'> S"gv
 
 noremap <C-H> b
 noremap <C-L> e
 
-imap <C-BS> <ESC>dbxa
+imap <C-BS> <ESC>dbxi
 
 "Personal thing for me in jekyll blogging
 nmap <C-k> i{% image_link %}<ESC>hhh<C-S-V>li width:90<ESC>
@@ -57,7 +61,7 @@ map <C-S-t> :tabnew +term\ fish<CR> :startinsert<CR>
 "Visual mode tab indentation
 vnoremap <TAB> >gv
 vnoremap <S-TAB> <gv
-
+"
 "Related to tasks plugin
 let g:TasksMarkerBase = '☐'
 let g:TasksMarkerInProgress = '»'
@@ -90,6 +94,7 @@ let maplocalleader="\<space>"
 vmap <C-c> "+yi
 "Control-Shift-V to paste from clipboard
 map <C-S-v> "+p
+imap <C-S-v> <ESC>"+pi
 
 "True-color
 set termguicolors
@@ -98,34 +103,8 @@ set termguicolors
 let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 
-"YouCompleteMe related, don't show tooltip automatically when hovering something
-let g:ycm_auto_hover = ""
-
-"Vim-startify
-let g:startify_custom_header_quotes = [
-    \ ['Neovim.', "Now 98% FOSS!"],
-    \ ["Don't sink your app with runtime bloat", "Program in C will stay afloat", "Do what you want there, close to the hardware!", "Program in C!"],
-    \ ["It's not a bug", "It's a feature"], 
-    \ ["This little maneuver's going to cost us 51 years"], 
-    \ ["Pizza time"], 
-    \ ["The power of the vim, in my hand"], 
-    \ ["Still got the moves!"], 
-    \ ["Você não está pensando em 4 dimensões!"], 
-    \ ["Falou tiozões do zap"], 
-    \ ["Você pode agradecer Alan Turing", "por tudo isso"], 
-    \ ["Antes de falarmos sobre clean coode", "devemos primeiro definir o que", "é clean code"], 
-    \ ["Ada Lovelace realmente mostrou", "para nós como é que se fazia"], 
-    \ ["Deixe o seu like, se inscreva", "e ativa o sininho para não perder nenhum vídeo"], 
-    \ ["One does not simply program in C++"], 
-    \ ["We estimate that in the next decade, everyone", "will have their own Turboencabulator at home."],
-    \ ["Just wrap it in a try catch bro"],
-    \ ["How do you exit vim?"],
-    \ ["Vim-tastic!"],
-\ ]
-let g:startify_skiplist = [
-    \ "/run/*"
-\ ]
-let g:startify_custom_header = 'startify#fortune#boxed()'
+"Startify
+let g:startify_custom_header = ''
 
 "Control s as save
 noremap <silent><c-s> :<c-u>update<cr>
@@ -133,6 +112,7 @@ vnoremap <silent><c-s> <c-c>:update<cr>gv
 inoremap <silent><c-s> <c-o>:update<cr>
 
 call plug#begin('~/vim/plugins/plugged')
+Plug 'lambdalisue/suda.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'morhetz/gruvbox'
@@ -148,7 +128,7 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'sheerun/vim-polyglot'
 Plug 'NLKNguyen/papercolor-theme'
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
@@ -158,6 +138,7 @@ Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'wfxr/minimap.vim'
 Plug 'romainl/vim-cool'
+Plug 'brenoprata10/nvim-highlight-colors'
 Plug 'junegunn/goyo.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'tpope/vim-commentary'
@@ -181,13 +162,32 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'lewis6991/hover.nvim'
 Plug 'folke/tokyonight.nvim'
+Plug 'kshenoy/vim-signature'
 Plug 'https://gitlab.com/yorickpeterse/nvim-dd.git'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'junegunn/vim-plug'
 call plug#end()
 
+" lsp_signature
+lua <<EOF
+require("lsp_signature").setup({
+    bind = true,
+    hint_enable = false,
+    doc_lines = 0,
+    handler_opts = {
+        border = "none"
+    }
+})
+EOF
+
+"nvim-highlight-colors
+lua require('nvim-highlight-colors').setup {}
+
+"echo-diagnostics
 lua require("echo-diagnostics").setup()
 set updatetime=300
 autocmd CursorHold * lua require('echo-diagnostics').echo_line_diagnostic()
+nnoremap <leader>cd <cmd>lua require("echo-diagnostics").echo_entire_diagnostic()<CR>
 
 "gitsigns
 lua <<EOF
@@ -211,12 +211,11 @@ lua require("mason-lspconfig").setup()
 
 "neovim-lspconfig
 lua require('lspconfig').bashls.setup({})
-lua require('lspconfig').clangd.setup({})
-lua require('lspconfig').cmake.setup({})
 lua require('lspconfig').cssls.setup({})
 lua require('lspconfig').html.setup({})
 lua require('lspconfig').sumneko_lua.setup({})
 lua require('lspconfig').rust_analyzer.setup({})
+lua require('lspconfig').pylsp.setup({})
 lua require('lspconfig').vimls.setup({})
 
 let g:lsc_auto_map = 1
